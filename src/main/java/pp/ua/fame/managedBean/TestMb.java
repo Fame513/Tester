@@ -1,6 +1,7 @@
 package pp.ua.fame.managedBean;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import pp.ua.fame.exception.TimeoutException;
 import pp.ua.fame.exception.TypeMismatchException;
 import pp.ua.fame.jsRuner.Js;
@@ -14,6 +15,8 @@ import javax.script.ScriptException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+//@Controller
+//@Scope("request")
 @ManagedBean(name="test")
 @ViewScoped
 public class TestMb {
@@ -25,6 +28,26 @@ public class TestMb {
     private String resultColor;
 
     private Task task;
+
+//    @ManagedProperty(value="#{js}")
+//    private Js js;
+//
+//    public Js getJs() {
+//        return js;
+//    }
+//
+//    public void setJs(Js js) {
+//        this.js = js;
+//    }
+
+        public TestMb() {
+        if (appContext == null) {
+            FacesContext ctx = FacesContext.getCurrentInstance();
+            String configLocation =
+                    ctx.getExternalContext().getInitParameter("contextConfigLocation");
+            appContext = new ClassPathXmlApplicationContext(configLocation);
+        }
+    }
 
 
     public Task getTask() throws IOException {
