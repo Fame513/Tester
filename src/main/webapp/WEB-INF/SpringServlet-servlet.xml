@@ -14,4 +14,7 @@
     <mvc:resources mapping="/js/**" location="/js/" />
     <mvc:annotation-driven />
     <mvc:resources mapping="resources" location="/"/>
+
+    <context:component-scan base-package="pp.ua.fame"/>
+    <context:annotation-config />
 </beans>

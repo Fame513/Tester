@@ -11,11 +11,11 @@ import javax.persistence.EntityManager;
 @Component()
 public class TaskDaoImp implements TaskDao {
     @Autowired
-    private EntityManager em;
+    private EntityManager entityManager;
 
     @Override
     public Task getTask(long id) {
-        return em.find(Task.class, id);
+        return entityManager.find(Task.class, id);
     }
 
     @Override

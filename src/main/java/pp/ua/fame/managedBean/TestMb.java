@@ -1,8 +1,6 @@
 package pp.ua.fame.managedBean;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import pp.ua.fame.dao.TaskDao;
 import pp.ua.fame.exception.TimeoutException;
 import pp.ua.fame.exception.TypeMismatchException;
 import pp.ua.fame.jsRuner.Js;
@@ -11,9 +9,9 @@ import pp.ua.fame.model.Test;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.script.ScriptException;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @ManagedBean(name="test")
@@ -28,32 +26,17 @@ public class TestMb {
 
     private Task task;
 
-    private static TaskDao taskDao;
-
-    public TestMb() {
-        if (appContext == null) {
-            FacesContext ctx = FacesContext.getCurrentInstance();
-            String configLocation =
-                    ctx.getExternalContext().getInitParameter("contextConfigLocation");
-            appContext = new ClassPathXmlApplicationContext(configLocation);
-        }
-        taskDao = (TaskDao)appContext.getBean("taskDaoImp");
-    }
 
     public Task getTask() throws IOException {
         if (task == null){
-            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-            int id = Integer.valueOf(externalContext.getRequestParameterMap().get("id"));
-            System.out.println(id);
-            task = taskDao.getTask(id);
-            if (task == null)
-                externalContext.dispatch("404page.xhtml");
+            HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            task = (Task) req.getAttribute("task");
         }
         return task;
     }
 
-    public void setTask(Task taskDAO) {
-        this.task = taskDAO;
+    public void setTask(Task task) {
+        this.task = task;
     }
 
     public String getSource() throws IOException {

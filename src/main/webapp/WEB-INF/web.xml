@@ -26,13 +26,9 @@
 
 
     <welcome-file-list>
-        <welcome-file>main.htm?di=1</welcome-file>
+        <welcome-file>/main/1</welcome-file>
     </welcome-file-list>
 
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>/spring-config.xml</param-value>
-    </context-param>
 
     <error-page>
         <error-code>404</error-code>

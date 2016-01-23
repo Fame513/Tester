@@ -1,4 +1,4 @@
-package pp.ua.fame;
+package pp.ua.fame.config;
 
 import jdk.nashorn.api.scripting.NashornScriptEngineFactory;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +12,7 @@ import javax.script.ScriptEngineManager;
 @Configuration
 public class SpringConfig {
     @Bean
-    public EntityManager em(){
+    public EntityManager entityManager(){
         return Persistence.createEntityManagerFactory("TesterDB").createEntityManager();
     }
 
@@ -28,4 +28,5 @@ public class SpringConfig {
     public ScriptEngine scriptEngine(){
         return nashorn();
     }
+
 }
