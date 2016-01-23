@@ -12,7 +12,8 @@ import static org.junit.Assert.assertTrue;
 public class Tests {
     @Test
     public void test() throws ScriptException, TypeMismatchException, TimeoutException {
-        Js test = new Js("x=3; x = 3+3+x; x*= 4; x;");
+        Js test = new Js();
+        test.setSource("x=3; x = 3+3+x; x*= 4; x;");
         Result result = test.eval();
 
         assertEquals(result.getNumber(),(Double) 36.0);
@@ -47,8 +48,10 @@ public class Tests {
             }
         }
 
-        Js test1 = new Js("x=2; x = 2+2+x; x*= 3; x;");
-        Js test2 = new Js("x=3; x = 3+3+x; x*= 4; x;");
+        Js test1 = new Js();
+        test1.setSource("x=2; x = 2+2+x; x*= 3; x;");
+        Js test2 = new Js();
+        test2.setSource("x=3; x = 3+3+x; x*= 4; x;");
         Thread thread1 = new Thread(new MyTread(test1, 18.0));
         Thread thread2 = new Thread(new MyTread(test2, 36.0));
         thread1.start();
@@ -61,15 +64,24 @@ public class Tests {
 
     @Test
     public void isTest() throws ScriptException, TimeoutException {
-        Js string = new Js("'String'");
-        Js boolTrue = new Js("true");
-        Js boolfalse = new Js("false");
-        Js Null = new Js("null");
-        Js undefined = new Js("undefined");
-        Js numberInt = new Js("2");
-        Js numberDouble = new Js("2.3");
-        Js array = new Js("[2, 3, 4]");
-        Js object = new Js("function x(){this.x = this}; new x");
+        Js string = new Js();
+        string.setSource("'String'");
+        Js boolTrue = new Js();
+        boolTrue.setSource("true");
+        Js boolfalse = new Js();
+        boolfalse.setSource("false");
+        Js Null = new Js();
+        Null.setSource("null");
+        Js undefined = new Js();
+        undefined.setSource("undefined");
+        Js numberInt = new Js();
+        numberInt.setSource("2");
+        Js numberDouble = new Js();
+        numberDouble.setSource("2.3");
+        Js array = new Js();
+        array.setSource("[2, 3, 4]");
+        Js object = new Js();
+        object.setSource("function x(){this.x = this}; new x");
         Result stringResult = string.eval();
         Result boolTrueResult = boolTrue.eval();
         Result boolfalseResult = boolfalse.eval();
@@ -91,7 +103,7 @@ public class Tests {
 
     @Test
     public void  taskTest(){
-        int x = -2147483648;
+
 //        Task taskDAO = new TestMock();
 //        String source = "function sum(array, from){\n" +
 //                "\tif (isNaN(from)) from = 0;\n" +
@@ -102,7 +114,8 @@ public class Tests {
 //        for (pp.ua.fame.model.Test test: taskDAO.getTests()) {
 //
 //            try {
-//                Object answer = new Js(source + test.getTest()).eval().getNumber();
+//                Object answer = new Js( + test.getTest()).eval().getNumber();
+//        Object.setSource(source);
 //                assertEquals(test.getAnswer(),answer);
 //            } catch (ScriptException | TimeoutException e) {
 //                System.err.println(e.getMessage());

@@ -1,17 +1,17 @@
 package pp.ua.fame.dao.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import pp.ua.fame.dao.TaskDao;
 import pp.ua.fame.model.Task;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.persistence.EntityManager;
 
+@Component()
 public class TaskDaoImp implements TaskDao {
+    @Autowired
     private EntityManager em;
-
-    public TaskDaoImp(EntityManager em) {
-        this.em = em;
-    }
 
     @Override
     public Task getTask(long id) {

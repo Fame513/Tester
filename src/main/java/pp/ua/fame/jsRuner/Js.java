@@ -1,22 +1,24 @@
 package pp.ua.fame.jsRuner;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import pp.ua.fame.exception.TimeoutException;
 
-import javax.faces.context.FacesContext;
 import javax.script.ScriptEngine;
 import javax.script.ScriptException;
 
 
-
+@Component()
+@Scope("prototype")
 public class Js {
 
     private static final int TIMEOUT = 5000;
 
-    private Status status;
-
+    @Autowired
     private ScriptEngine engine;
+
+    private Status status = Status.CREATE;
 
     private String source;
 
@@ -24,19 +26,9 @@ public class Js {
 
     private Result result;
 
-    private static ApplicationContext appContext;
 
-    public Js(String source) {
-        if (appContext == null) {
-            FacesContext ctx = FacesContext.getCurrentInstance();
-            String configLocation =
-                    ctx.getExternalContext().getInitParameter("contextConfigLocation");
-            appContext = new ClassPathXmlApplicationContext(configLocation);
-        }
-        engine = (ScriptEngine)appContext.getBean("nashorn");
-//        engine.getContext().setWriter(new OutputStreamWriter(System.err));
+    public void setSource(String source) {
         this.source = source;
-        status = Status.CREATE;
     }
 
     public Result eval() throws ScriptException, TimeoutException {

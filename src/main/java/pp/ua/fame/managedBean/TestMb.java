@@ -37,14 +37,13 @@ public class TestMb {
                     ctx.getExternalContext().getInitParameter("contextConfigLocation");
             appContext = new ClassPathXmlApplicationContext(configLocation);
         }
-        taskDao = (TaskDao)appContext.getBean("taskDao");
+        taskDao = (TaskDao)appContext.getBean("taskDaoImp");
     }
 
     public Task getTask() throws IOException {
         if (task == null){
             ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
             int id = Integer.valueOf(externalContext.getRequestParameterMap().get("id"));
-//        int id = 1;
             System.out.println(id);
             task = taskDao.getTask(id);
             if (task == null)
@@ -83,24 +82,25 @@ public class TestMb {
 
     public void calculateResult(){
         result = "OK";
-        resultColor = "green";
-        try {
+        resultColor = "red";
+        tryBlock:try {
             for (Test test: task.getTests()) {
-                Object answer = new Js(source + test.getTest()).eval().getNumber();
+//                Object answer = new Js(source + test.getTest()).eval().getNumber();
+                Js js = (Js) appContext.getBean("js");
+                js.setSource(source + test.getTest());  //TODO ask to Dima how set default constructor
+                Double answer = js.eval().getNumber();
                 if (!test.getAnswer().equals(answer.toString())){
-                    result = "Fail on " + test.getTest();
+                    result = "Fail on " + test.getTest();       //TODO on fail throw exception
                     resultColor = "red";
-                    break;
+                    break tryBlock;
                 }
             }
+            resultColor = "green";
         } catch (ScriptException e) {
             result = "Error: "+ e.getMessage();
-            resultColor = "red";
         } catch (TimeoutException e) {
             result = "Error: Timeout";
-            resultColor = "red";
         } catch (TypeMismatchException e) {
-            resultColor = "red";
             result = "Wrong returned type";
         }
     }
