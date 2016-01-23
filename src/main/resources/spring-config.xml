@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean id="scriptEngineManager" class="javax.script.ScriptEngineManager"/>
+    <bean id="nashornScriptEngineFactory" class="jdk.nashorn.api.scripting.NashornScriptEngineFactory"/>
+
+    <bean id="rhino" factory-bean="scriptEngineManager" factory-method="getEngineByName" scope="prototype">
+        <constructor-arg value="rhino" type="java.lang.String"/>
+    </bean>
+
+    <bean id="nashorn" factory-bean="nashornScriptEngineFactory" factory-method="getScriptEngine" scope="prototype">
+        <constructor-arg value="--no-java"/>
+    </bean>
+
+
+    <!--<bean id="pesist" class="javax.model.Persistence" factory-method="createEntityManagerFactory">-->
+        <!--<constructor-arg value="TesterDB" type="java.lang.String"/>-->
+    <!--</bean>-->
+
+    <!--<bean id="em" factory-bean="pesist" factory-method="createEntityManager"/>-->
+    <!--<bean id="taskDao" class="pp.ua.fame.dao.impl.TaskDaoImp">-->
+        <!--<constructor-arg ref="em"/>-->
+    <!--</bean>-->
+    <bean id="taskDao" class="pp.ua.fame.dao.impl.TaskDaoImp">
+        <constructor-arg value="#{T(javax.persistence.Persistence).createEntityManagerFactory('TesterDB')?.createEntityManager()}"/>
+    </bean>
+</beans>

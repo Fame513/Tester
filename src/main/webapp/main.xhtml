@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Tester</title>
+    <style type="text/css" media="screen">
+        #editor {
+            width: 500px;
+            height: 300px;
+        }
+    </style>
+</h:head>
+<f:view>
+    #{id}
+    <h:outputLabel value="#{test.task.description}"/>
+    <br/>
+    <h:form id="form">
+        <div id="editor">#{test.source}</div>
+        <h:inputHidden id="source" value="#{test.source}"/>
+        <h:commandButton  value="Send" onclick="getSource()">
+            <f:ajax render="result" execute="source" listener="#{test.calculateResult}"/>
+        </h:commandButton>
+    </h:form>
+    <h:outputLabel id="result" value="#{test.result}" style="color: #{test.resultColor}"/>
+
+
+</f:view>
+<script src="/js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="/js/ace/ext-language_tools.js"></script>
+<script type="text/javascript">
+    ace.require("ace/ext/language_tools");
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/dreamweaver");
+    editor.getSession().setMode("ace/mode/javascript");
+    editor.setOptions({
+        enableBasicAutocompletion: true,
+        enableLiveAutocompletion: false,
+        fontSize: "12pt"
+    });
+    function getSource(){
+        document.getElementById("form:source").value = editor.getValue();
+    }
+</script>
+
+</html>
