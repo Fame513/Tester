@@ -1,7 +1,5 @@
 package pp.ua.fame.managedBean;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import pp.ua.fame.exception.TimeoutException;
 import pp.ua.fame.exception.TypeMismatchException;
 import pp.ua.fame.jsRuner.Js;
@@ -9,18 +7,15 @@ import pp.ua.fame.model.Task;
 import pp.ua.fame.model.Test;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.script.ScriptException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-//@Controller
-//@Scope("request")
 @ManagedBean(name="test")
-@ViewScoped
+@javax.faces.bean.ViewScoped
 public class TestMb {
-    private static ApplicationContext appContext;
 
     private String source;
     private Object result;
@@ -29,24 +24,11 @@ public class TestMb {
 
     private Task task;
 
-//    @ManagedProperty(value="#{js}")
-//    private Js js;
-//
-//    public Js getJs() {
-//        return js;
-//    }
-//
-//    public void setJs(Js js) {
-//        this.js = js;
-//    }
+    @ManagedProperty(value="#{js}")
+    private Js js;      //TODO js is a singleton!!!!
 
-        public TestMb() {
-        if (appContext == null) {
-            FacesContext ctx = FacesContext.getCurrentInstance();
-            String configLocation =
-                    ctx.getExternalContext().getInitParameter("contextConfigLocation");
-            appContext = new ClassPathXmlApplicationContext(configLocation);
-        }
+    public void setJs(Js js) {
+        this.js = js;
     }
 
 
@@ -91,8 +73,6 @@ public class TestMb {
         resultColor = "red";
         tryBlock:try {
             for (Test test: task.getTests()) {
-//                Object answer = new Js(source + test.getTest()).eval().getNumber();
-                Js js = (Js) appContext.getBean("js");
                 js.setSource(source + test.getTest());  //TODO ask to Dima how set default constructor
                 Double answer = js.eval().getNumber();
                 if (!test.getAnswer().equals(answer.toString())){
