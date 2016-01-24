@@ -1,5 +1,6 @@
 package pp.ua.fame.managedBean;
 
+import org.springframework.web.jsf.FacesContextUtils;
 import pp.ua.fame.exception.TimeoutException;
 import pp.ua.fame.exception.TypeMismatchException;
 import pp.ua.fame.jsRuner.Js;
@@ -7,13 +8,12 @@ import pp.ua.fame.model.Task;
 import pp.ua.fame.model.Test;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.script.ScriptException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-@ManagedBean(name="test")
+@ManagedBean
 @javax.faces.bean.ViewScoped
 public class TestMb {
 
@@ -23,14 +23,6 @@ public class TestMb {
     private String resultColor;
 
     private Task task;
-
-    @ManagedProperty(value="#{js}")
-    private Js js;      //TODO js is a singleton!!!!
-
-    public void setJs(Js js) {
-        this.js = js;
-    }
-
 
     public Task getTask() throws IOException {
         if (task == null){
@@ -69,6 +61,7 @@ public class TestMb {
     }
 
     public void calculateResult(){
+        Js js = (Js) FacesContextUtils.getWebApplicationContext(FacesContext.getCurrentInstance()).getBean("js");
         result = "OK";
         resultColor = "red";
         tryBlock:try {

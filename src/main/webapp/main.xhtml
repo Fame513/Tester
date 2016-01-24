@@ -16,16 +16,16 @@
 </h:head>
 <f:view>
     #{id}
-    <h:outputLabel value="#{test.task.description}"/>
+    <h:outputLabel value="#{testMb.task.description}"/>
     <br/>
     <h:form id="form">
-        <div id="editor">#{test.source}</div>
-        <h:inputHidden id="source" value="#{test.source}"/>
+        <div id="editor">#{testMb.source}</div>
+        <h:inputHidden id="source" value="#{testMb.source}"/>
         <h:commandButton  value="Send" onclick="getSource()">
-            <f:ajax render="result" execute="source" listener="#{test.calculateResult}"/>
+            <f:ajax render="result" execute="source" listener="#{testMb.calculateResult}"/>
         </h:commandButton>
     </h:form>
-    <h:outputLabel id="result" value="#{test.result}" style="color: #{test.resultColor}"/>
+    <h:outputLabel id="result" value="#{testMb.result}" style="color: #{test.resultColor}"/>
 
 
 </f:view>

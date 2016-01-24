@@ -4,6 +4,7 @@ import jdk.nashorn.api.scripting.NashornScriptEngineFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
@@ -27,6 +28,7 @@ public class SpringConfig {
     }
 
     @Bean
+    @Scope("prototype")
     public ScriptEngine scriptEngine(){
         return nashorn();
     }
