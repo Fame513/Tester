@@ -4,47 +4,36 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
-    <!--<servlet>-->
-        <!--<servlet-name>JSF</servlet-name>-->
-        <!--<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>-->
-    <!--</servlet>-->
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>JSF</servlet-name>-->
-        <!--<url-pattern>*.htm</url-pattern>-->
-    <!--</servlet-mapping>-->
-
     <servlet>
-        <servlet-name>Springervlet</servlet-name>
+        <servlet-name>SpringServlet</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Springervlet</servlet-name>
+        <servlet-name>SpringServlet</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
 
 
     <welcome-file-list>
-        <welcome-file>main.htm?di=1</welcome-file>
+        <welcome-file>/main/1</welcome-file>
     </welcome-file-list>
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>Spring-config.xml</param-value>
+        <param-value>/WEB-INF/SpringServlet-servlet.xml</param-value>
     </context-param>
-    <context-param>
-        <param-name>javax.faces.CONFIG_FILES</param-name>
-        <param-value>/faces-config.xml</param-value>
-    </context-param>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
 
     <error-page>
         <error-code>404</error-code>
         <location>/404page.xhtml</location>
     </error-page>
-    <!--<error-page>-->
-        <!--<error-code>500</error-code>-->
-        <!--<location>/404page.xhtml</location>-->
-    <!--</error-page>-->
+
 
 </web-app>

@@ -1,6 +1,6 @@
-package pp.ua.fame.DAO;
+package pp.ua.fame.dao;
 
-import pp.ua.fame.persistence.Task;
+import pp.ua.fame.model.Task;
 
 public interface TaskDao {
     Task getTask(long id);

@@ -1,9 +1,9 @@
-package pp.ua.fame.persistence;
+package pp.ua.fame.model;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "test")
+        //TODO Check table
 public class Test {
 
     @Id

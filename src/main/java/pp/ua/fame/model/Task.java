@@ -1,10 +1,10 @@
-package pp.ua.fame.persistence;
+package pp.ua.fame.model;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "task")
+//@Table(name = "task")
 public class Task {
 
     @Id

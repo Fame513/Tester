@@ -1,4 +1,4 @@
-package pp.ua.fame.exceptions;
+package pp.ua.fame.exception;
 
 public class TimeoutException extends TesterException {
     public TimeoutException() {

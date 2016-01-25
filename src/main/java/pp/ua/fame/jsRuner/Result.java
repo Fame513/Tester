@@ -1,15 +1,26 @@
-package pp.ua.fame.JSRuner;
+package pp.ua.fame.jsRuner;
 
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
-import pp.ua.fame.exceptions.TypeMismatchException;
+import pp.ua.fame.exception.TypeMismatchException;
 
 import java.util.Map;
 
 public class Result {
     private Object result;
 
+    private String console;
+
     public Result(Object result) {
         this.result = result;
+    }
+
+    public Result(Object result, String console) {
+        this.result = result;
+        this.console = console;
+    }
+
+    public String getConsole() {
+        return console;
     }
 
     public boolean isNull(){
@@ -53,36 +64,41 @@ public class Result {
     public ScriptObjectMirror getScriptObject() throws TypeMismatchException {
         if (isScriptObject()){
             return (ScriptObjectMirror) result;
-        } else
+        } else {
             throw new TypeMismatchException("Result is not ScriptObject");
+        }
     }
 
     public Double getNumber() throws TypeMismatchException {
         if (isNumber()){
             return (Double.valueOf(result.toString()));
-        } else
+        } else {
             throw new TypeMismatchException("Result is not Number");
+        }
     }
 
     public String getString() throws TypeMismatchException {
         if (isString()){
             return (String) result;
-        } else
+        } else {
             throw new TypeMismatchException("Result is not String");
+        }
     }
 
     public Boolean getBoolean() throws TypeMismatchException {
         if (isBoolean()){
             return (Boolean) result;
-        } else
+        } else {
             throw new TypeMismatchException("Result is not Boolean");
+        }
     }
 
     public Map getArray() throws TypeMismatchException {
         if (isArray()){
             return (Map)result;
-        } else
+        } else {
             throw new TypeMismatchException("Result is not Array");
+        }
     }
 
     public Object getObject(){

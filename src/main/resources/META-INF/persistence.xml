@@ -8,7 +8,7 @@
     <persistence-unit name="TesterDB" transaction-type="RESOURCE_LOCAL">
         <properties>
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
-            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/Tester"/>
+            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/Tester1"/>
             <property name="hibernate.connection.username" value="root"/>
             <property name="hibernate.connection.password" value=""/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
