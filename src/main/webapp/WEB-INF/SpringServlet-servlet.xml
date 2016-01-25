@@ -15,5 +15,4 @@
     <mvc:resources mapping="resources" location="/"/>
 
     <context:component-scan base-package="pp.ua.fame"/>
-    <!--<context:annotation-config />-->
 </beans>

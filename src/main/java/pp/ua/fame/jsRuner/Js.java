@@ -7,6 +7,8 @@ import pp.ua.fame.exception.TimeoutException;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptException;
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStreamWriter;
 
 
 @Component()
@@ -26,8 +28,7 @@ public class Js {
 
     private Result result;
 
-
-    public void setSource(String source) {
+    public Js(String source) {
         this.source = source;
     }
 
@@ -35,7 +36,9 @@ public class Js {
         status = Status.RUN;
         Thread calculatingThread = new Thread(() ->{
             try {
-                result = new Result(engine.eval(source));
+                ByteArrayOutputStream myConsole = new ByteArrayOutputStream();
+                engine.getContext().setWriter(new OutputStreamWriter(myConsole));
+                result = new Result(engine.eval(source), new String(myConsole.toByteArray()));
                 status = Status.FINISH;
             } catch (ScriptException e) {
                 ex = e;

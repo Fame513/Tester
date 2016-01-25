@@ -22,10 +22,12 @@
         <div id="editor">#{testMb.source}</div>
         <h:inputHidden id="source" value="#{testMb.source}"/>
         <h:commandButton  value="Send" onclick="getSource()">
-            <f:ajax render="result" execute="source" listener="#{testMb.calculateResult}"/>
+            <f:ajax render="result console" execute="source" listener="#{testMb.calculateResult}"/>
         </h:commandButton>
     </h:form>
-    <h:outputLabel id="result" value="#{testMb.result}" style="color: #{test.resultColor}"/>
+    <h:outputLabel id="result" value="#{testMb.result}" style="color: #{testMb.resultColor}"/>
+    <br/>
+    <h:inputTextarea style="width: 500px; height: 300px" readonly="true" id="console" value="#{testMb.console}" />
 
 
 </f:view>

@@ -8,8 +8,19 @@ import java.util.Map;
 public class Result {
     private Object result;
 
+    private String console;
+
     public Result(Object result) {
         this.result = result;
+    }
+
+    public Result(Object result, String console) {
+        this.result = result;
+        this.console = console;
+    }
+
+    public String getConsole() {
+        return console;
     }
 
     public boolean isNull(){

@@ -1,9 +1,11 @@
 package pp.ua.fame.managedBean;
 
+import org.springframework.context.ApplicationContext;
 import org.springframework.web.jsf.FacesContextUtils;
 import pp.ua.fame.exception.TimeoutException;
 import pp.ua.fame.exception.TypeMismatchException;
 import pp.ua.fame.jsRuner.Js;
+import pp.ua.fame.jsRuner.Result;
 import pp.ua.fame.model.Task;
 import pp.ua.fame.model.Test;
 
@@ -21,7 +23,7 @@ public class TestMb {
     private Object result;
 
     private String resultColor;
-
+    private String console ="";
     private Task task;
 
     public Task getTask() throws IOException {
@@ -43,6 +45,13 @@ public class TestMb {
         return source;
     }
 
+    public String getConsole() {
+        return console;
+    }
+
+    public void setConsole(String console) {
+        this.console = console;
+    }
 
     public String getResultColor() {
         return resultColor;
@@ -61,15 +70,18 @@ public class TestMb {
     }
 
     public void calculateResult(){
-        Js js = (Js) FacesContextUtils.getWebApplicationContext(FacesContext.getCurrentInstance()).getBean("js");
         result = "OK";
         resultColor = "red";
         tryBlock:try {
             for (Test test: task.getTests()) {
-                js.setSource(source + test.getTest());  //TODO ask to Dima how set default constructor
-                Double answer = js.eval().getNumber();
+                ApplicationContext appContext = FacesContextUtils.getWebApplicationContext(FacesContext.getCurrentInstance());
+                Js js = (Js) appContext.getBean("js", source + test.getTest());
+                Result result = js.eval();      //TODO change variables names;
+                console += result.getConsole();
+                Double answer = result.getNumber();
+                System.out.println(console);
                 if (!test.getAnswer().equals(answer.toString())){
-                    result = "Fail on " + test.getTest();       //TODO on fail throw exception
+                    this.result = "Fail on " + test.getTest();       //TODO on fail throw exception
                     resultColor = "red";
                     break tryBlock;
                 }
